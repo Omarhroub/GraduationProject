@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="435.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prototype.AddNewAppointmentController">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="68.0" prefWidth="435.0" style="-fx-background-color: #64B5F6;">
+         <children>
+            <Text fill="#fafafa" strokeType="OUTSIDE" strokeWidth="0.0" text="Add New Appointment">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Text>
+         </children>
+      </HBox>
+      <Pane layoutY="68.0" prefHeight="18.0" prefWidth="435.0" style="-fx-background-color: #424242;" />
+      <Label layoutX="89.0" layoutY="131.0" prefHeight="25.0" prefWidth="41.0" text="Title:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="shortDescription" layoutX="151.0" layoutY="131.0" prefHeight="25.0" prefWidth="181.0" />
+      <Label layoutX="89.0" layoutY="198.0" prefHeight="25.0" prefWidth="41.0" text="Date:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="appointmentDate" layoutX="151.0" layoutY="198.0" prefHeight="25.0" prefWidth="181.0" style="-fx-background-color: #64B5F6;" />
+      <Label layoutX="89.0" layoutY="261.0" prefHeight="25.0" prefWidth="41.0" text="Time:">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="hoursComboBox" layoutX="151.0" layoutY="261.0" prefHeight="25.0" prefWidth="86.0" promptText="Hours" style="-fx-background-color: #64B5F6;" />
+      <ComboBox fx:id="minutesComboBox" layoutX="246.0" layoutY="261.0" prefHeight="25.0" prefWidth="86.0" promptText="Minutes" style="-fx-background-color: #64B5F6;" />
+      <Text layoutX="239.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text=":">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+      <Button layoutX="151.0" layoutY="312.0" mnemonicParsing="false" onAction="#handleGenerateDateAndTime" prefHeight="25.0" prefWidth="123.0" text="Auto Date&amp;Time" />
+   </children>
+</AnchorPane>

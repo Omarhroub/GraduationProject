@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="mainBorderPain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prototype.MainPageController">
+   <left>
+      <VBox prefHeight="366.0" prefWidth="150.0" style="-fx-border-color: black; -fx-background-color: #E3F2FD;" BorderPane.alignment="CENTER">
+         <children>
+            <Circle fx:id="doctorPicture" fill="DODGERBLUE" radius="71.0" stroke="BLACK" strokeType="INSIDE">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="5.0" />
+               </VBox.margin>
+            </Circle>
+            <Label fx:id="doctorName" text="Omar Hroub">
+               <VBox.margin>
+                  <Insets left="50.0" top="4.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </left>
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <HBox prefHeight="35.0" prefWidth="1021.0" style="-fx-border-color: black; -fx-background-color: #E3F2FD;">
+               <children>
+                  <Label text="Dashboard">
+                     <HBox.margin>
+                        <Insets left="40.0" top="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <AnchorPane fx:id="mainAnchorPane" prefHeight="583.0" prefWidth="809.0" stylesheets="@my-tableview-styles.css" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="patientsTableView" layoutX="155.0" layoutY="97.0" prefHeight="476.0" prefWidth="532.0">
+              <columns>
+                <TableColumn fx:id="patientsId" prefWidth="75.0" style="-fx-alignment: center;" text="ID" />
+                <TableColumn fx:id="patientsName" prefWidth="116.0" style="-fx-alignment: center;" text="Patients" />
+                  <TableColumn fx:id="appointmentColumn" prefWidth="173.0" style="-fx-alignment: center;" text="Appointments" />
+                  <TableColumn fx:id="editColumn" prefWidth="160.0" style="-fx-alignment: center;" text="Edit" />
+              </columns>
+            </TableView>
+            <Button layoutX="155.0" layoutY="55.0" mnemonicParsing="false" onMouseClicked="#handleNewPatientDialouge" prefHeight="28.0" prefWidth="85.0" text="Add Patient" />
+            <Label fx:id="todaysDate" layoutX="569.0" layoutY="55.0" prefHeight="28.0" prefWidth="118.0" text="YYYY-MM-DD">
+               <font>
+                  <Font size="19.0" />
+               </font></Label>
+            <TextField fx:id="searchTextField" layoutX="155.0" layoutY="14.0" onKeyTyped="#handleSearchButton" prefHeight="25.0" prefWidth="530.0" promptText="Search for Patients" style="-fx-background-radius: 20px;" />
+            <Button layoutX="249.0" layoutY="55.0" mnemonicParsing="false" onAction="#refreshData" prefHeight="28.0" prefWidth="59.0" text="Refresh" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
