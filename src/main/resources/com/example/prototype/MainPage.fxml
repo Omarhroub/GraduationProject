@@ -82,10 +82,21 @@
               </columns>
             </TableView>
             <Button layoutX="155.0" layoutY="55.0" mnemonicParsing="false" onMouseClicked="#handleNewPatientDialouge" prefHeight="28.0" prefWidth="85.0" text="Add Patient" />
-            <Label fx:id="todaysDate" layoutX="569.0" layoutY="55.0" prefHeight="28.0" prefWidth="118.0" text="YYYY-MM-DD">
-               <font>
-                  <Font size="19.0" />
-               </font></Label>
+            <HBox layoutX="559.0" layoutY="54.0">
+               <children>
+                  <Label fx:id="todaysDate" prefHeight="30.0" prefWidth="126.0" style="-fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 15px; -fx-border-color: #BDBDBD; -fx-border-radius: 15px;" text="YYYY-MM-DD">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets left="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
             <TextField fx:id="searchTextField" layoutX="155.0" layoutY="14.0" onKeyTyped="#handleSearchButton" prefHeight="25.0" prefWidth="530.0" promptText="Search for Patients" style="-fx-background-radius: 20px;" />
             <Button layoutX="249.0" layoutY="55.0" mnemonicParsing="false" onAction="#refreshData" prefHeight="28.0" prefWidth="59.0" text="Refresh" />
          </children>

@@ -13,6 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class LoginPageController {
@@ -97,23 +99,29 @@ public class LoginPageController {
         return test;
     }
 
-    public void handleRegister(){
+    public void handleRegister() {
         try {
-            // Load the FXML file for the register page
+
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("RegisterPage.fxml"));
             Parent root = fxmlLoader.load();
 
-            // Create a new stage
+
             Stage stage = new Stage();
             stage.setTitle("Register New Doctor");
             stage.setScene(new Scene(root));
+            File iconFile = new File("C:\\Users\\Omar\\IdeaProjects\\Prototype\\src\\main\\java\\com\\example\\prototype\\Images\\LoginLogo1.png"); // Replace "icon.png" with the path to your icon image
+            if (iconFile.exists()) {
+                FileInputStream iconStream = new FileInputStream(iconFile);
+                Image iconImage = new Image(iconStream);
+                stage.getIcons().add(iconImage);
+            } else {
+                System.out.println("Icon file not found.");
+            }
 
-            // Show the stage
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     //    private boolean verifyLogin() {

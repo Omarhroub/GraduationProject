@@ -15,10 +15,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
 
-        // Load the image file using FileInputStream
         FileInputStream iconStream = new FileInputStream("C:\\Users\\Omar\\IdeaProjects\\Prototype\\src\\main\\java\\com\\example\\prototype\\Images\\LoginLogo1.png");
-
-        // Set the icon for the stage
         primaryStage.getIcons().add(new Image(iconStream));
 
         primaryStage.setTitle("CLINIDESK");

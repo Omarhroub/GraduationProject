@@ -226,9 +226,19 @@ public class MainPageController implements Initializable {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(mainBorderPain.getScene().getWindow());
         dialog.setTitle("Add a new Patient");
-//        dialog.setHeaderText("Use this dialouge to create a new patient");
+
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddNewPatientDialouge.fxml"));
         try {
+            Image image = new Image("C:\\Users\\Omar\\IdeaProjects\\Prototype\\src\\main\\java\\com\\example\\prototype\\Images\\AppointmentsPage.png");
+            BackgroundImage backgroundImage = new BackgroundImage(
+                    image,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.CENTER,
+                    BackgroundSize.DEFAULT);
+            Background background = new Background(backgroundImage);
+            dialog.getDialogPane().setBackground(background);
+
             dialog.getDialogPane().setContent(fxmlLoader.load());
 
         } catch (IOException e) {
@@ -259,6 +269,8 @@ public class MainPageController implements Initializable {
     }
 
     public ObservableList<Patient> returnFilteredList(String searchString) {
+        initiatePatients();
+        initiateAppointments();
         ObservableList<Patient> searchList = FXCollections.observableArrayList();
         for (Patient patient : activeDoctor.getPatientsList()) {
             if (patient.getFullName().toLowerCase().contains(searchString.toLowerCase())) {

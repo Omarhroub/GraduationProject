@@ -27,15 +27,15 @@ public class AddNewPatientController {
     private AnchorPane addNewPatientAnchorPane;
 
     public void initialize(){
-        Image image = new Image("C:\\Users\\Omar\\IdeaProjects\\Prototype\\src\\main\\java\\com\\example\\prototype\\Images\\DoctorDashboard.png");
-        BackgroundImage backgroundImage = new BackgroundImage(
-                image,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                BackgroundSize.DEFAULT);
-        Background background = new Background(backgroundImage);
-        addNewPatientAnchorPane.setBackground(background);
+//        Image image = new Image("C:\\Users\\Omar\\IdeaProjects\\Prototype\\src\\main\\java\\com\\example\\prototype\\Images\\AddEditPatients.jpg");
+//        BackgroundImage backgroundImage = new BackgroundImage(
+//                image,
+//                BackgroundRepeat.NO_REPEAT,
+//                BackgroundRepeat.NO_REPEAT,
+//                BackgroundPosition.CENTER,
+//                BackgroundSize.DEFAULT);
+//        Background background = new Background(backgroundImage);
+//        addNewPatientAnchorPane.setBackground(background);
     }
 
     public Patient processResult(){

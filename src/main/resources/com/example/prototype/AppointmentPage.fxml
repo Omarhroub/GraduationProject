@@ -17,10 +17,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="appointmentPageAnchorPane" prefHeight="732.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prototype.AppointmentPageController">
+<AnchorPane fx:id="appointmentPageAnchorPane" prefHeight="732.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prototype.AppointmentPageController">
    <children>
       <ListView fx:id="appointmentsListView" fixedCellSize="40.0" layoutX="4.0" layoutY="74.0" onMouseClicked="#handleClickAppointmentsListView" prefHeight="583.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-radius: 5px;" />
-      <AnchorPane layoutX="211.0" layoutY="56.0" prefHeight="365.0" prefWidth="738.0" style="-fx-border-radius: 20px; -fx-border-color: black;">
+      <AnchorPane layoutX="211.0" layoutY="56.0" prefHeight="365.0" prefWidth="738.0" style="-fx-border-radius: 20px; -fx-border-color: black; -fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 15px;">
          <children>
             <Label layoutX="15.0" layoutY="168.0" text="Notes:">
                <font>
@@ -64,7 +64,7 @@
          </children>
       </AnchorPane>
       <Text layoutX="211.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20;" text="Appointment Details:" wrappingWidth="200.0" />
-      <AnchorPane layoutX="211.0" layoutY="450.0" prefHeight="262.0" prefWidth="738.0" style="-fx-border-radius: 20px; -fx-border-color: black;">
+      <AnchorPane layoutX="211.0" layoutY="450.0" prefHeight="262.0" prefWidth="738.0" style="-fx-border-radius: 20px; -fx-border-color: black; -fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 15px;">
          <children>
             <Label layoutX="22.0" layoutY="14.0" text="Name:">
                <font>
@@ -118,7 +118,7 @@
       </AnchorPane>
       <Text layoutX="211.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20;" text="Patient Details:" wrappingWidth="200.0" />
       <Button layoutX="48.0" layoutY="669.0" mnemonicParsing="false" onAction="#handleNewAppointmentDialouge" text="Add Appointment" />
-      <HBox alignment="CENTER_LEFT" layoutX="731.0" layoutY="6.0" prefHeight="42.0" prefWidth="217.0" style="-fx-border-color: black; -fx-border-radius: 15px;">
+      <HBox alignment="CENTER_LEFT" layoutX="731.0" layoutY="6.0" prefHeight="42.0" prefWidth="217.0" style="-fx-border-color: black; -fx-border-radius: 15px; -fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 15px;">
          <children>
             <Label prefHeight="25.0" prefWidth="124.0" text="Appointment Date :">
                <font>
@@ -141,7 +141,7 @@
          </children>
       </Pane>
       <ComboBox fx:id="filterComboBox" layoutX="29.0" layoutY="43.0" onAction="#handleFilterComboBoxClick" prefWidth="150.0" promptText="Filter" />
-      <HBox alignment="CENTER_LEFT" layoutX="546.0" layoutY="6.0" prefHeight="42.0" prefWidth="179.0" style="-fx-border-color: black; -fx-border-radius: 15px;">
+      <HBox alignment="CENTER_LEFT" layoutX="546.0" layoutY="6.0" prefHeight="42.0" prefWidth="179.0" style="-fx-border-color: black; -fx-border-radius: 15px; -fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 15px;">
          <children>
             <Label prefHeight="25.0" prefWidth="119.0" text="Appointment Time :">
                <font>

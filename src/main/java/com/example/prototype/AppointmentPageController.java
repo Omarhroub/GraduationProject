@@ -230,7 +230,7 @@ public class AppointmentPageController {
 
         } else if (selectedItem.equals("Completed")) {
 
-            ObservableList<Appointment> filteredAppointmentList = db.getFilteredList("Completed", Integer.toString(curPatient.getId()), curPatient.getDocId());
+            ObservableList<Appointment> filteredAppointmentList = db.getFilteredList("Compeleted", Integer.toString(curPatient.getId()), curPatient.getDocId());
             appointmentsListView.getItems().setAll(filteredAppointmentList);
 
         } else {
