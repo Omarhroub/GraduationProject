@@ -5,11 +5,14 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -161,8 +164,15 @@ public class AppointmentPageController {
             appointment.setStatus(selectedStatus.getText());
         }
         appointment.setPaymentStatus(paymentStatusCheckBox.isSelected());
-        db.updateAppointment(appointment);
+        try {
+            db.updateAppointment(appointment);
+            showAlert(Alert.AlertType.INFORMATION, "Success", "Appointment Saved Successfully!");
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to Save Appointment!");
+            e.printStackTrace(); // Print the stack trace for debugging purposes
+        }
     }
+
 
     @FXML
     public void handleNewAppointmentDialouge() {
@@ -181,20 +191,16 @@ public class AppointmentPageController {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 Appointment newAppointment = controller.processData();
 
-                if (!db.checkIfAppointmentTimeExists(newAppointment.getDate(),newAppointment.getSelectedHour(),newAppointment.getSelectedMinute())) {
+                if (!db.checkIfAppointmentTimeExists(newAppointment.getDate(), newAppointment.getSelectedHour(), newAppointment.getSelectedMinute())) {
                     curPatient.addAppointment(newAppointment);
                     newAppointment.setPatientId(Integer.toString(curPatient.getId()));
                     newAppointment.setId(db.addNewAppointment(newAppointment, Integer.toString(curPatient.getId()), docID));
                     appointmentsListView.getItems().setAll(curPatient.getAppointmentsList());
                     appointmentsListView.getSelectionModel().select(newAppointment);
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "Appointment Added Successfully!");
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Overlapping appointments");
-                    alert.setContentText("The appointment Date and Time already exists.");
-                    alert.showAndWait();
+                    showAlert(Alert.AlertType.ERROR, "Error", "Overlapping appointments. The appointment Date and Time already exists.");
                 }
-
             }
         } catch (IOException e) {
             System.out.println("Couldn't load the new appointment dialogue");
@@ -276,6 +282,29 @@ public class AppointmentPageController {
                 appointment.setXray(image);
                 appointmentsListView.getItems().setAll(curPatient.getAppointmentsList());
             }
+        }
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
+    @FXML
+    public void handleGenerateReport(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AppointmentReport.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.setTitle("Appointment Report");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

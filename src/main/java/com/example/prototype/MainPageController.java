@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -51,13 +52,14 @@ public class MainPageController implements Initializable {
     @FXML
     private AnchorPane mainAnchorPane;
 
-    public void refreshData(){
+    public void refreshData() {
         initiatePatients();
         initiateAppointments();
         patientsTableView.setItems(activeDoctor.getPatientsList());
         setCellColumn();
     }
-    public void handleInitialization(){
+
+    public void handleInitialization() {
         Image image = new Image("C:\\Users\\Omar\\IdeaProjects\\Prototype\\src\\main\\java\\com\\example\\prototype\\Images\\DoctorDashboard.png");
         BackgroundImage backgroundImage = new BackgroundImage(
                 image,
@@ -122,7 +124,7 @@ public class MainPageController implements Initializable {
                             try {
                                 Parent root = loader.load();
                                 AppointmentPageController controller = loader.getController();
-                                controller.initData(patient,activeDoctor.getId());
+                                controller.initData(patient, activeDoctor.getId());
                                 Stage stage = new Stage();
                                 stage.setScene(new Scene(root));
                                 stage.setResizable(false);
@@ -165,7 +167,6 @@ public class MainPageController implements Initializable {
                             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EditPatientDetails.fxml"));
                             try {
                                 dialog.getDialogPane().setContent(fxmlLoader.load());
-
                             } catch (IOException e) {
                                 System.out.println("Couldn't load the Edit patient dialouge");
                                 e.printStackTrace();
@@ -179,13 +180,17 @@ public class MainPageController implements Initializable {
                             Optional<ButtonType> result = dialog.showAndWait();
 
                             if (result.isPresent() && result.get() == ButtonType.OK) {
-                                System.out.println(controller.getUpdatedPatient());
-                                patient = controller.getUpdatedPatient();
-                                db.updatePatient(patient);
-                                initiatePatients();
-                                initiateAppointments();
-                                patientsTableView.getItems().setAll(activeDoctor.getPatientsList());
-
+                                Patient updatedPatient = controller.getUpdatedPatient();
+                                try {
+                                    db.updatePatient(updatedPatient);
+                                    initiatePatients();
+                                    initiateAppointments();
+                                    patientsTableView.getItems().setAll(activeDoctor.getPatientsList());
+                                    showAlert(Alert.AlertType.INFORMATION, "Success", "Patient details updated successfully!");
+                                } catch (Exception e) {
+                                    showAlert(Alert.AlertType.ERROR, "Error", "Failed to update patient details!");
+                                    e.printStackTrace(); // Print the stack trace for debugging purposes
+                                }
                             }
                         });
 
@@ -213,6 +218,7 @@ public class MainPageController implements Initializable {
                         } else {
                             HBox buttonsContainer = new HBox(editButton, deleteButton);
                             buttonsContainer.setSpacing(5);
+                            buttonsContainer.setAlignment(Pos.CENTER);
                             setGraphic(buttonsContainer);
                         }
                     }
@@ -255,15 +261,25 @@ public class MainPageController implements Initializable {
             AddNewPatientController controller = fxmlLoader.getController();
             Patient newPatient = controller.processResult();
             newPatient.setDocId(activeDoctor.getId());
-            activeDoctor.addPatient(newPatient);
-            patientsTableView.setItems(activeDoctor.getPatientsList());
-            patientsTableView.getSelectionModel().select(newPatient);
-            newPatient.setId(Integer.parseInt(db.addNewPatient(newPatient)));
-
+            try {
+                String patientId = db.addNewPatient(newPatient);
+                if (patientId != null && !patientId.isEmpty()) {
+                    newPatient.setId(Integer.parseInt(patientId));
+                    activeDoctor.addPatient(newPatient);
+                    patientsTableView.setItems(activeDoctor.getPatientsList());
+                    patientsTableView.getSelectionModel().select(newPatient);
+                    showAlert(Alert.AlertType.INFORMATION, "Success", "Patient added successfully!");
+                } else {
+                    showAlert(Alert.AlertType.ERROR, "Error", "Failed to add patient!");
+                }
+            } catch (Exception e) {
+                showAlert(Alert.AlertType.ERROR, "Error", "Failed to add patient!");
+                e.printStackTrace(); // Print the stack trace for debugging purposes
+            }
         }
     }
 
-    public void handleSearchButton(){
+    public void handleSearchButton() {
         patientsTableView.getItems().clear();
         patientsTableView.getItems().addAll(returnFilteredList(searchTextField.getText()));
     }
@@ -279,5 +295,13 @@ public class MainPageController implements Initializable {
         }
 
         return searchList;
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }

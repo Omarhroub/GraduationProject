@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane fx:id="appointmentRecordAnchorPane" prefHeight="699.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prototype.AppointmentReportController">
+   <children>
+      <Button layoutX="47.0" layoutY="640.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="58.0" style="-fx-background-radius: 20px; -fx-background-color: #4FC3F7;" text="Print" />
+   </children>
+</AnchorPane>

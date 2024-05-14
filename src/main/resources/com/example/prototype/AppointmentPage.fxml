@@ -158,6 +158,6 @@
             </Label>
          </children>
       </HBox>
-      <Button layoutX="48.0" layoutY="700.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="Generate Report" />
+      <Button layoutX="48.0" layoutY="700.0" mnemonicParsing="false" onAction="#handleGenerateReport" prefHeight="25.0" prefWidth="112.0" text="Generate Report" />
    </children>
 </AnchorPane>
