@@ -2,6 +2,7 @@ package com.example.prototype;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -168,15 +169,27 @@ public class MainPageController implements Initializable {
                             try {
                                 dialog.getDialogPane().setContent(fxmlLoader.load());
                             } catch (IOException e) {
-                                System.out.println("Couldn't load the Edit patient dialouge");
                                 e.printStackTrace();
+                                System.out.println("Couldn't load the Edit patient dialouge");
                                 return;
                             }
 
                             dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
                             dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+
+                            Button okButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+
+                            okButton.addEventFilter(ActionEvent.ACTION, eventt -> {
+                                EditPatientDetailsController controller = fxmlLoader.getController();
+                                if (!controller.validateAgeField()) {
+                                    eventt.consume();
+                                }
+                            });
+
                             EditPatientDetailsController controller = fxmlLoader.getController();
                             controller.setFields(patient);
+
                             Optional<ButtonType> result = dialog.showAndWait();
 
                             if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -256,9 +269,21 @@ public class MainPageController implements Initializable {
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
 
+// Get the OK button so you can handle its action
+        Button okButton = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+
+        okButton.addEventFilter(ActionEvent.ACTION, event -> {
+            AddNewPatientController controller = fxmlLoader.getController();
+            if (!controller.validateAgeField()) {
+                event.consume(); // Prevent dialog from closing if validation fails
+            }
+        });
+
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             AddNewPatientController controller = fxmlLoader.getController();
+
+            // Since we validated before, no need to validate again
             Patient newPatient = controller.processResult();
             newPatient.setDocId(activeDoctor.getId());
             try {
@@ -277,6 +302,7 @@ public class MainPageController implements Initializable {
                 e.printStackTrace(); // Print the stack trace for debugging purposes
             }
         }
+
     }
 
     public void handleSearchButton() {

@@ -33,6 +33,18 @@ public class RegisterController {
         Background background = new Background(backgroundImage);
         registerBorderPane.setBackground(background);
 
+        fullNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("[a-zA-Z ]*")) {
+                fullNameField.setText(newValue.replaceAll("[^a-zA-Z ]", ""));
+            }
+        });
+
+        phoneNumberField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("[\\d+\\- ]*")) {
+                phoneNumberField.setText(newValue.replaceAll("[^\\d+\\- ]", ""));
+            }
+        });
+
     }
     public void handleRegister() {
         String fullName = fullNameField.getText();

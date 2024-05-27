@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -9,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="addNewPatientAnchorPane" prefHeight="450.0" prefWidth="453.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prototype.AddNewPatientController">
+<AnchorPane fx:id="addNewPatientAnchorPane" prefHeight="450.0" prefWidth="453.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prototype.AddNewPatientController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="63.0" prefWidth="456.0" style="-fx-background-color: #E1F5FE;">
          <children>
@@ -41,7 +43,6 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <TextField fx:id="genderField" layoutX="157.0" layoutY="213.0" prefHeight="25.0" prefWidth="193.0" />
       <Text layoutX="13.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address:">
          <font>
             <Font size="16.0" />
@@ -60,5 +61,10 @@
          </font>
       </Text>
       <DatePicker fx:id="dobField" layoutX="157.0" layoutY="355.0" prefHeight="25.0" prefWidth="193.0" style="-fx-background-color: #64B5F6;" />
+      <ComboBox fx:id="genderComboBox" layoutX="157.0" layoutY="213.0" prefHeight="25.0" prefWidth="193.0" promptText="Gender" />
+      <Label fx:id="ageErrorLabel" layoutX="161.0" layoutY="191.0" textFill="#da0707">
+         <font>
+            <Font size="15.0" />
+         </font></Label>
    </children>
 </AnchorPane>

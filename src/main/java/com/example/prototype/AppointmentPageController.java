@@ -298,6 +298,11 @@ public class AppointmentPageController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AppointmentReport.fxml"));
             Parent root = fxmlLoader.load();
+
+            AppointmentReportController controller = fxmlLoader.getController();
+            controller.setPatient(curPatient);
+            controller.setAppointment(appointmentsListView.getSelectionModel().getSelectedItem());
+
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setResizable(false);
