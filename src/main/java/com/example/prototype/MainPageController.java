@@ -1,5 +1,6 @@
 package com.example.prototype;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -73,19 +74,34 @@ public class MainPageController implements Initializable {
     private Button patientsButton;
     @FXML
     private TextField searchTextField1;
+    @FXML
+    private Button appointmentsRefreshButton;
+    @FXML
+    private Button addPatientButton;
+    @FXML
+    private Button patientsRefreshButton;
 
+    @FXML
     public void refreshPatientsData() {
         patientsButton.setDisable(true);
         appointmentsButton.setDisable(false);
+        appointmentsRefreshButton.setVisible(false);
+        addPatientButton.setVisible(true);
+        patientsRefreshButton.setVisible(true);
         initiatePatients();
         initiateAppointments();
         patientsTableView.setItems(activeDoctor.getPatientsList());
         setPatientsCellColumn();
     }
 
+    @FXML
     public void refreshAppointmentsData() {
         patientsButton.setDisable(false);
         appointmentsButton.setDisable(true);
+        appointmentsRefreshButton.setVisible(true);
+        addPatientButton.setVisible(false);
+        patientsRefreshButton.setVisible(false);
+
         appointmentsTableView.setItems(db.getAllAppointments(activeDoctor.getId()));
         setAppointmentsCellColumn();
     }
@@ -431,8 +447,8 @@ public class MainPageController implements Initializable {
                 searchList.add(appointment);
             }
             String appointmentDate = appointment.getDate().toString();
-            if (appointmentDate.contains(searchString)){
-                if(!searchList.contains(appointment)){
+            if (appointmentDate.contains(searchString)) {
+                if (!searchList.contains(appointment)) {
                     searchList.add(appointment);
                 }
             }
@@ -484,5 +500,29 @@ public class MainPageController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    @FXML
+    public void handleLogOut() {
+        Stage stage = (Stage) mainBorderPain.getScene().getWindow();
+        stage.close();
+
+        LoginPageController lc = new LoginPageController();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginPage.fxml"));
+            Parent root = loader.load();
+            Stage previousStage = new Stage();
+            previousStage.setScene(new Scene(root, 600, 600));
+            previousStage.setTitle("CliniDesk");
+            previousStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Could not load Login page");
+        }
+    }
+
+    @FXML
+    public void handleExit() {
+        Platform.exit();
     }
 }

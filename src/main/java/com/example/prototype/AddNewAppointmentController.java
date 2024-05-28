@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,8 +21,20 @@ public class AddNewAppointmentController {
     @FXML
     private ComboBox<Integer> minutesComboBox;
     DatabaseHandler db = new DatabaseHandler();
+    @FXML
+    private AnchorPane addNewAppointmentAnchorPane;
 
     public void initialize() {
+                Image image = new Image("C:\\Users\\Omar\\IdeaProjects\\Prototype\\src\\main\\java\\com\\example\\prototype\\Images\\AppointmentsPage.png");
+        BackgroundImage backgroundImage = new BackgroundImage(
+                image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundImage);
+        addNewAppointmentAnchorPane.setBackground(background);
+
         hoursComboBox.getItems().add(8);
         hoursComboBox.getItems().add(9);
         hoursComboBox.getItems().add(10);

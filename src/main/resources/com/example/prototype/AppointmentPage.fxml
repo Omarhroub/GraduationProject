@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -17,147 +18,152 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="appointmentPageAnchorPane" prefHeight="732.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prototype.AppointmentPageController">
-   <children>
-      <ListView fx:id="appointmentsListView" fixedCellSize="40.0" layoutX="4.0" layoutY="74.0" onMouseClicked="#handleClickAppointmentsListView" prefHeight="583.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-radius: 5px;" />
-      <AnchorPane layoutX="211.0" layoutY="56.0" prefHeight="365.0" prefWidth="738.0" style="-fx-border-radius: 20px; -fx-border-color: black; -fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 15px;">
+
+<ScrollPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prototype.AppointmentPageController">
+   <content>
+      <AnchorPane fx:id="appointmentPageAnchorPane" prefHeight="732.0" prefWidth="962.0">
          <children>
-            <Label layoutX="15.0" layoutY="168.0" text="Notes:">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="notes" layoutX="102.0" layoutY="138.0" prefHeight="103.0" prefWidth="217.0" wrapText="true" />
-            <Label layoutX="8.0" layoutY="79.0" text="Prescription:">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <TextField fx:id="prescriptionField" layoutX="102.0" layoutY="77.0" />
-            <Label layoutX="14.0" layoutY="250.0" text="Status:">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <RadioButton fx:id="scheduledRadioButton" layoutX="103.0" layoutY="252.0" mnemonicParsing="false" text="Scheduled">
-               <toggleGroup>
-                  <ToggleGroup fx:id="statusToggleGroup" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="cancelledRadioButton" layoutX="202.0" layoutY="252.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="77.0" text="Cancelled" toggleGroup="$statusToggleGroup" />
-            <RadioButton fx:id="completedRadioButton" layoutX="293.0" layoutY="252.0" mnemonicParsing="false" text="Compeleted" toggleGroup="$statusToggleGroup" />
-            <Label layoutX="9.0" layoutY="298.0" text="Payment Status:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <CheckBox fx:id="paymentStatusCheckBox" layoutX="108.0" layoutY="290.0" mnemonicParsing="false" text="Paid" />
-            <Button fx:id="saveButton" layoutX="671.0" layoutY="318.0" mnemonicParsing="false" onAction="#handleAppointmentDetailsSave" prefHeight="25.0" prefWidth="53.0" style="-fx-background-radius: 20px;" text="Save" />
-            <Label layoutX="15.0" layoutY="25.0" text="Diagnosis:">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <TextField fx:id="diagnosisField" layoutX="102.0" layoutY="23.0" />
-            <ImageView fx:id="appointmentImage" fitHeight="235.0" fitWidth="200.0" layoutX="471.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="importImageButton" layoutX="104.0" layoutY="331.0" mnemonicParsing="false" onAction="#handleImageImportButton" style="-fx-background-radius: 20px;" text="Import Image" />
+            <ListView fx:id="appointmentsListView" fixedCellSize="40.0" layoutX="4.0" layoutY="74.0" onMouseClicked="#handleClickAppointmentsListView" prefHeight="583.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-radius: 5px;" />
+            <AnchorPane layoutX="211.0" layoutY="56.0" prefHeight="365.0" prefWidth="738.0" style="-fx-border-radius: 20px; -fx-border-color: black; -fx-background-radius: 15px;">
+               <children>
+                  <Label layoutX="15.0" layoutY="168.0" text="Notes:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextArea fx:id="notes" layoutX="102.0" layoutY="138.0" prefHeight="103.0" prefWidth="217.0" wrapText="true" />
+                  <Label layoutX="8.0" layoutY="79.0" text="Prescription:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="prescriptionField" layoutX="102.0" layoutY="77.0" />
+                  <Label layoutX="14.0" layoutY="250.0" text="Status:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="scheduledRadioButton" layoutX="103.0" layoutY="252.0" mnemonicParsing="false" text="Scheduled">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="statusToggleGroup" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="cancelledRadioButton" layoutX="202.0" layoutY="252.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="77.0" text="Cancelled" toggleGroup="$statusToggleGroup" />
+                  <RadioButton fx:id="completedRadioButton" layoutX="293.0" layoutY="252.0" mnemonicParsing="false" text="Compeleted" toggleGroup="$statusToggleGroup" />
+                  <Label layoutX="9.0" layoutY="298.0" text="Payment Status:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <CheckBox fx:id="paymentStatusCheckBox" layoutX="108.0" layoutY="290.0" mnemonicParsing="false" text="Paid" />
+                  <Button fx:id="saveButton" layoutX="671.0" layoutY="318.0" mnemonicParsing="false" onAction="#handleAppointmentDetailsSave" prefHeight="25.0" prefWidth="53.0" style="-fx-background-radius: 20px;" text="Save" />
+                  <Label layoutX="15.0" layoutY="25.0" text="Diagnosis:">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="diagnosisField" layoutX="102.0" layoutY="23.0" />
+                  <ImageView fx:id="appointmentImage" fitHeight="235.0" fitWidth="200.0" layoutX="471.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="importImageButton" layoutX="104.0" layoutY="331.0" mnemonicParsing="false" onAction="#handleImageImportButton" style="-fx-background-radius: 20px;" text="Import Image" />
+               </children>
+            </AnchorPane>
+            <Text layoutX="211.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20;" text="Appointment Details:" wrappingWidth="200.0" />
+            <AnchorPane layoutX="211.0" layoutY="450.0" prefHeight="262.0" prefWidth="738.0" style="-fx-border-radius: 20px; -fx-border-color: black; -fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 15px;">
+               <children>
+                  <Label layoutX="22.0" layoutY="14.0" text="Name:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="254.0" layoutY="14.0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="254.0" layoutY="14.0" text="Gender:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="88.0" text="Address:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="494.0" layoutY="15.0" text="Age:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="patientsName" editable="false" layoutX="90.0" layoutY="12.0" prefHeight="25.0" prefWidth="138.0" promptText="patientsName" />
+                  <TextField fx:id="patientsGender" editable="false" layoutX="310.0" layoutY="12.0" prefHeight="25.0" prefWidth="126.0" />
+                  <TextField fx:id="patientsAge" editable="false" layoutX="532.0" layoutY="13.0" prefHeight="25.0" prefWidth="126.0" />
+                  <TextField fx:id="patientsAddress" editable="false" layoutX="90.0" layoutY="87.0" prefHeight="25.0" prefWidth="138.0" />
+                  <Label layoutX="254.0" layoutY="88.0" text="Phone:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="patientsPhone" editable="false" layoutX="310.0" layoutY="86.0" prefHeight="25.0" prefWidth="126.0" />
+                  <Label layoutX="494.0" layoutY="89.0" text="Dob:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="patientsDob" editable="false" layoutX="532.0" layoutY="87.0" prefHeight="25.0" prefWidth="126.0" />
+                  <Label layoutX="14.0" layoutY="168.0" text="Date Joined:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="patientsJoinDate" editable="false" layoutX="90.0" layoutY="166.0" prefHeight="25.0" prefWidth="138.0" />
+                  <ImageView fx:id="patientsImage" fitHeight="128.0" fitWidth="185.0" layoutX="532.0" layoutY="127.0" onMousePressed="#handleClickPfpPIC" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+            <Text layoutX="211.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20;" text="Patient Details:" wrappingWidth="200.0" />
+            <Button layoutX="48.0" layoutY="669.0" mnemonicParsing="false" onAction="#handleNewAppointmentDialouge" text="Add Appointment" />
+            <HBox alignment="CENTER_LEFT" layoutX="731.0" layoutY="6.0" prefHeight="42.0" prefWidth="217.0" style="-fx-border-color: black; -fx-border-radius: 15px; -fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 15px;">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="124.0" text="Appointment Date :">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="3.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="appointmentDate" prefHeight="20.0" prefWidth="88.0" text="YYYY/MM/DD">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Pane layoutX="4.0" layoutY="13.0" prefHeight="27.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-radius: 10px;">
+               <children>
+                  <Text layoutX="28.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20;" text="Appointments" wrappingWidth="144.205078125" />
+               </children>
+            </Pane>
+            <ComboBox fx:id="filterComboBox" layoutX="29.0" layoutY="43.0" onAction="#handleFilterComboBoxClick" prefWidth="150.0" promptText="Filter" />
+            <HBox alignment="CENTER_LEFT" layoutX="546.0" layoutY="6.0" prefHeight="42.0" prefWidth="179.0" style="-fx-border-color: black; -fx-border-radius: 15px; -fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 15px;">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="119.0" text="Appointment Time :">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="3.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="appointmentTime" prefHeight="20.0" prefWidth="56.0" text="HH : MM">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Button layoutX="48.0" layoutY="700.0" mnemonicParsing="false" onAction="#handleGenerateReport" prefHeight="25.0" prefWidth="112.0" text="Generate Report" />
          </children>
       </AnchorPane>
-      <Text layoutX="211.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20;" text="Appointment Details:" wrappingWidth="200.0" />
-      <AnchorPane layoutX="211.0" layoutY="450.0" prefHeight="262.0" prefWidth="738.0" style="-fx-border-radius: 20px; -fx-border-color: black; -fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 15px;">
-         <children>
-            <Label layoutX="22.0" layoutY="14.0" text="Name:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="254.0" layoutY="14.0">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="254.0" layoutY="14.0" text="Gender:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="14.0" layoutY="88.0" text="Address:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Label layoutX="494.0" layoutY="15.0" text="Age:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="patientsName" editable="false" layoutX="90.0" layoutY="12.0" prefHeight="25.0" prefWidth="138.0" promptText="patientsName" />
-            <TextField fx:id="patientsGender" editable="false" layoutX="310.0" layoutY="12.0" prefHeight="25.0" prefWidth="126.0" />
-            <TextField fx:id="patientsAge" editable="false" layoutX="532.0" layoutY="13.0" prefHeight="25.0" prefWidth="126.0" />
-            <TextField fx:id="patientsAddress" editable="false" layoutX="90.0" layoutY="87.0" prefHeight="25.0" prefWidth="138.0" />
-            <Label layoutX="254.0" layoutY="88.0" text="Phone:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="patientsPhone" editable="false" layoutX="310.0" layoutY="86.0" prefHeight="25.0" prefWidth="126.0" />
-            <Label layoutX="494.0" layoutY="89.0" text="Dob:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="patientsDob" editable="false" layoutX="532.0" layoutY="87.0" prefHeight="25.0" prefWidth="126.0" />
-            <Label layoutX="14.0" layoutY="168.0" text="Date Joined:">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <TextField fx:id="patientsJoinDate" editable="false" layoutX="90.0" layoutY="166.0" prefHeight="25.0" prefWidth="138.0" />
-            <ImageView fx:id="patientsImage" fitHeight="128.0" fitWidth="185.0" layoutX="532.0" layoutY="127.0" onMousePressed="#handleClickPfpPIC" pickOnBounds="true" preserveRatio="true" />
-         </children>
-      </AnchorPane>
-      <Text layoutX="211.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20;" text="Patient Details:" wrappingWidth="200.0" />
-      <Button layoutX="48.0" layoutY="669.0" mnemonicParsing="false" onAction="#handleNewAppointmentDialouge" text="Add Appointment" />
-      <HBox alignment="CENTER_LEFT" layoutX="731.0" layoutY="6.0" prefHeight="42.0" prefWidth="217.0" style="-fx-border-color: black; -fx-border-radius: 15px; -fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 15px;">
-         <children>
-            <Label prefHeight="25.0" prefWidth="124.0" text="Appointment Date :">
-               <font>
-                  <Font size="13.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="3.0" />
-               </HBox.margin>
-            </Label>
-            <Label fx:id="appointmentDate" prefHeight="20.0" prefWidth="88.0" text="YYYY/MM/DD">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <Pane layoutX="4.0" layoutY="13.0" prefHeight="27.0" prefWidth="200.0" style="-fx-border-color: black; -fx-border-radius: 10px;">
-         <children>
-            <Text layoutX="28.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20;" text="Appointments" wrappingWidth="144.205078125" />
-         </children>
-      </Pane>
-      <ComboBox fx:id="filterComboBox" layoutX="29.0" layoutY="43.0" onAction="#handleFilterComboBoxClick" prefWidth="150.0" promptText="Filter" />
-      <HBox alignment="CENTER_LEFT" layoutX="546.0" layoutY="6.0" prefHeight="42.0" prefWidth="179.0" style="-fx-border-color: black; -fx-border-radius: 15px; -fx-background-color: rgba(255, 255, 255, 0.6); -fx-background-radius: 15px;">
-         <children>
-            <Label prefHeight="25.0" prefWidth="119.0" text="Appointment Time :">
-               <font>
-                  <Font size="13.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="3.0" />
-               </HBox.margin>
-            </Label>
-            <Label fx:id="appointmentTime" prefHeight="20.0" prefWidth="56.0" text="HH : MM">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <Button layoutX="48.0" layoutY="700.0" mnemonicParsing="false" onAction="#handleGenerateReport" prefHeight="25.0" prefWidth="112.0" text="Generate Report" />
-   </children>
-</AnchorPane>
+   </content>
+</ScrollPane>
