@@ -10,7 +10,7 @@ public class Doctor {
     private ObservableList<Patient> patientsList;
     private String phoneNumber;
     private String password;
-    private Image imagePath = new Image("C:\\Users\\Omar\\IdeaProjects\\Prototype\\src\\main\\java\\com\\example\\prototype\\Images\\default doctor image.png");
+    private Image imagePath = new Image("C:\\Users\\Omar\\IdeaProjects\\Prototype\\src\\main\\java\\com\\example\\prototype\\Images\\default_dr.jpg");
 
     public Doctor() {
 

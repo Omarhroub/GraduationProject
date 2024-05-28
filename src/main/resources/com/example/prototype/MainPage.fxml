@@ -18,9 +18,9 @@
 
 <BorderPane fx:id="mainBorderPain" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.prototype.MainPageController">
    <left>
-      <VBox prefHeight="366.0" prefWidth="150.0" style="-fx-border-color: black; -fx-background-color: #E3F2FD;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="366.0" prefWidth="150.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
          <children>
-            <Circle fx:id="doctorPicture" fill="DODGERBLUE" radius="71.0" stroke="BLACK" strokeType="INSIDE">
+            <Circle fx:id="doctorPicture" fill="DODGERBLUE" onMouseClicked="#handleClickPfpPIC" radius="71.0" stroke="BLACK" strokeType="INSIDE">
                <VBox.margin>
                   <Insets left="20.0" right="20.0" top="5.0" />
                </VBox.margin>
@@ -33,6 +33,16 @@
                   <Font size="15.0" />
                </font>
             </Label>
+            <Button fx:id="appointmentsButton" mnemonicParsing="false" onAction="#fillAppointmentsInTable" text="Appointments">
+               <VBox.margin>
+                  <Insets left="45.0" top="40.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="patientsButton" mnemonicParsing="false" onAction="#fillPatientsInTable" prefHeight="25.0" prefWidth="92.0" text="Patients">
+               <VBox.margin>
+                  <Insets left="45.0" top="10.0" />
+               </VBox.margin>
+            </Button>
          </children>
       </VBox>
    </left>
@@ -58,7 +68,7 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <HBox prefHeight="35.0" prefWidth="1021.0" style="-fx-border-color: black; -fx-background-color: #E3F2FD;">
+            <HBox prefHeight="35.0" prefWidth="1021.0" style="-fx-border-color: black;">
                <children>
                   <Label text="Dashboard">
                      <HBox.margin>
@@ -73,7 +83,7 @@
    <center>
       <AnchorPane fx:id="mainAnchorPane" prefHeight="583.0" prefWidth="809.0" stylesheets="@my-tableview-styles.css" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="patientsTableView" layoutX="155.0" layoutY="97.0" prefHeight="476.0" prefWidth="532.0">
+            <TableView fx:id="patientsTableView" layoutX="155.0" layoutY="97.0" prefHeight="476.0" prefWidth="532.0" visible="false">
               <columns>
                 <TableColumn fx:id="patientsId" prefWidth="75.0" style="-fx-alignment: center;" text="ID" />
                 <TableColumn fx:id="patientsName" prefWidth="116.0" style="-fx-alignment: center;" text="Patients" />
@@ -98,7 +108,17 @@
                </children>
             </HBox>
             <TextField fx:id="searchTextField" layoutX="155.0" layoutY="14.0" onKeyTyped="#handleSearchButton" prefHeight="25.0" prefWidth="530.0" promptText="Search for Patients" style="-fx-background-radius: 20px;" />
-            <Button layoutX="249.0" layoutY="55.0" mnemonicParsing="false" onAction="#refreshData" prefHeight="28.0" prefWidth="59.0" text="Refresh" />
+            <Button layoutX="249.0" layoutY="55.0" mnemonicParsing="false" onAction="#refreshPatientsData" prefHeight="28.0" prefWidth="59.0" text="Refresh" />
+            <TableView fx:id="appointmentsTableView" layoutX="155.0" layoutY="97.0" prefHeight="476.0" prefWidth="532.0">
+              <columns>
+                <TableColumn fx:id="appointmentIdColumn" prefWidth="75.0" style="-fx-alignment: center;" text="ID" />
+                <TableColumn fx:id="appointmentDateColumn" prefWidth="138.0" style="-fx-alignment: center;" text="Appointment Date" />
+                  <TableColumn fx:id="patientsNameColumn" prefWidth="110.0" style="-fx-alignment: center;" text="Patient's Name" />
+                  <TableColumn fx:id="ShortDescriptionColumn" prefWidth="109.0" style="-fx-alignment: center;" text="Short Description" />
+                  <TableColumn fx:id="detailsColumn" prefWidth="97.0" style="-fx-alignment: center;" text="Details" />
+              </columns>
+            </TableView>
+            <TextField fx:id="searchTextField1" layoutX="155.0" layoutY="14.0" onKeyTyped="#handleAppointmentSearchButton" prefHeight="25.0" prefWidth="530.0" promptText="Search for Appointments" style="-fx-background-radius: 20px;" visible="false" />
          </children>
       </AnchorPane>
    </center>

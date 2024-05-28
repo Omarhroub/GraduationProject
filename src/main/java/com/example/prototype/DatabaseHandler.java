@@ -177,7 +177,7 @@ public class DatabaseHandler {
             preparedStatement.setString(5, patient.getPhoneNumber());
             Date sqlDate = Date.valueOf(patient.getDateOfBirth());
             preparedStatement.setDate(6, sqlDate);
-            preparedStatement.setInt(7,patient.getId());
+            preparedStatement.setInt(7, patient.getId());
 
             preparedStatement.executeUpdate();
             connection.close();
@@ -383,6 +383,7 @@ public class DatabaseHandler {
                 appointment.setStatus(resultSet.getString("status"));
                 appointment.setPaymentStatus(resultSet.getBoolean("payment_status"));
                 appointment.setPrescription(resultSet.getString("prescription"));
+                appointment.setDiagnosis(resultSet.getString("diagnosis"));
                 filteredAppointmentsList.add(appointment);
             }
         } catch (Exception e) {
@@ -421,18 +422,18 @@ public class DatabaseHandler {
         return hours;
     }
 
-    public boolean checkIfAppointmentTimeExists(LocalDate appointmentDate, int hour, int minute){
+    public boolean checkIfAppointmentTimeExists(LocalDate appointmentDate, int hour, int minute) {
         boolean exists = false;
-        try{
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, userName, password);
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) FROM appointments WHERE appointment_date = ? AND selected_hour = ? AND selected_minute = ?");
             java.sql.Date date = java.sql.Date.valueOf(appointmentDate);
-            statement.setDate(1,date);
-            statement.setInt(2,hour);
-            statement.setInt(3,minute);
+            statement.setDate(1, date);
+            statement.setInt(2, hour);
+            statement.setInt(3, minute);
             ResultSet resultSet = statement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 int count = resultSet.getInt(1);
                 exists = count > 0;
             }
@@ -443,12 +444,112 @@ public class DatabaseHandler {
         return exists;
     }
 
+    public ObservableList<Appointment> getAllAppointments(String doctorId) {
+        ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, userName, password);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM appointments WHERE doctor_id = ? ORDER BY appointment_date DESC, selected_hour, selected_minute");
+            statement.setString(1, doctorId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Appointment appointment = new Appointment();
+                appointment.setId(resultSet.getString("appointment_id"));
+                appointment.setShortDescription(resultSet.getString("short_description"));
+                appointment.setPatientId(resultSet.getString("patient_id"));
+                appointment.setNotes(resultSet.getString("notes"));
+                appointment.setDate(resultSet.getDate("appointment_date").toLocalDate());
+                appointment.setSelectedHour(resultSet.getInt("selected_hour"));
+                appointment.setSelectedMinute(resultSet.getInt("selected_minute"));
+                appointment.setStatus(resultSet.getString("status"));
+                appointment.setPaymentStatus(resultSet.getBoolean("payment_status"));
+                appointment.setPrescription(resultSet.getString("prescription"));
+                appointments.add(appointment);
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Could NOT return appointments");
+        }
 
+        return appointments;
+    }
+
+    public String getPatientName(String patientId) {
+        String patientName = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, userName, password);
+            PreparedStatement statement = connection.prepareStatement("SELECT fullName FROM patients WHERE id = ?");
+            statement.setString(1, patientId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                patientName = resultSet.getString("fullName");
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Could NOT return patient name");
+        }
+        return patientName;
+    }
+
+    public int getPatientAge(String patientId) {
+        int patientAge = -1; // Use -1 to indicate an error or not found
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, userName, password);
+            PreparedStatement statement = connection.prepareStatement("SELECT age FROM patients WHERE id = ?");
+            statement.setString(1, patientId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                patientAge = resultSet.getInt("age");
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Could NOT return patient age");
+        }
+        return patientAge;
+    }
+
+    public Patient getPatient(String patientId) {
+        Patient patient = null;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url, userName, password);
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM patients WHERE id = ?");
+            statement.setString(1, patientId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                patient = new Patient();
+                patient.setId(resultSet.getInt("id"));
+                patient.setFullName(resultSet.getString("fullName"));
+                patient.setAge(resultSet.getInt("age"));
+                patient.setGender(resultSet.getString("gender"));
+                patient.setAddress(resultSet.getString("address"));
+                patient.setPhoneNumber(resultSet.getString("phoneNumber"));
+                patient.setDateOfBirth(resultSet.getDate("dateOfBirth").toLocalDate());
+                patient.setDateJoined(resultSet.getDate("dateJoined").toLocalDate());
+                patient.setDocId(resultSet.getString("doctorId"));
+            }
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Could NOT retrieve patient information");
+        }
+        return patient;
+    }
 
 
     public static void main(String[] args) {
         DatabaseHandler db = new DatabaseHandler();
+        ObservableList<Appointment> list = db.getAllAppointments("1");
+        for (Appointment app : list) {
+            System.out.println(app.getDate());
 
+        }
     }
 }
 

@@ -1,5 +1,6 @@
 package com.example.prototype;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,7 +11,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -72,7 +76,6 @@ public class AppointmentPageController {
     private Button importImageButton;
 
 
-
     public void initData(Patient patient, String docId) {
         String[] options = {"Scheduled", "Cancelled", "Completed", "All"};
         filterComboBox.getItems().addAll(options);
@@ -84,7 +87,30 @@ public class AppointmentPageController {
 
         addAppointmentContextMenu();
 
-        Image image = new Image("C:\\Users\\Omar\\IdeaProjects\\Prototype\\src\\main\\java\\com\\example\\prototype\\Images\\AppointmentsPage.png");
+        Image image = new Image("C:\\Users\\Omar\\IdeaProjects\\Prototype\\src\\main\\java\\com\\example\\prototype\\Images\\AppointmentPagee.png");
+        BackgroundImage backgroundImage = new BackgroundImage(
+                image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundImage);
+        appointmentPageAnchorPane.setBackground(background);
+    }
+
+    public void initData2(Patient patient, String docId, Appointment selectedAppointment) {
+        String[] options = {"Scheduled", "Cancelled", "Completed", "All"};
+        filterComboBox.getItems().addAll(options);
+
+        System.out.println(selectedAppointment.getShortDescription());
+        curPatient = patient;
+        docID = docId;
+        appointmentsListView.getItems().setAll(curPatient.getAppointmentsList());
+        appointmentsListView.getSelectionModel().select(selectedAppointment);
+        setPatientsFields(curPatient);
+        addAppointmentContextMenu();
+
+        Image image = new Image("C:\\Users\\Omar\\IdeaProjects\\Prototype\\src\\main\\java\\com\\example\\prototype\\Images\\AppointmentPagee.png");
         BackgroundImage backgroundImage = new BackgroundImage(
                 image,
                 BackgroundRepeat.NO_REPEAT,
@@ -95,6 +121,7 @@ public class AppointmentPageController {
         appointmentPageAnchorPane.setBackground(background);
 
     }
+
 
     private void setPatientsFields(Patient patient) {
         patientsName.setText(patient.getFullName());
@@ -294,7 +321,7 @@ public class AppointmentPageController {
     }
 
     @FXML
-    public void handleGenerateReport(){
+    public void handleGenerateReport() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AppointmentReport.fxml"));
             Parent root = fxmlLoader.load();
@@ -313,7 +340,42 @@ public class AppointmentPageController {
         }
     }
 
+    @FXML
+    private void handleClickPfpPIC() {
+        ContextMenu pfpContextMenu = new ContextMenu();
+        MenuItem changePfp = new MenuItem("Change Profile Picture...");
 
+        // Add action to the menu item
+        changePfp.setOnAction(event -> {
+            // Your code to handle the action
+            System.out.println("Change Profile Picture clicked");
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Image File");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.bmp"));
+            File selectedFile = fileChooser.showOpenDialog(appointmentPageAnchorPane.getScene().getWindow());
+            if (selectedFile != null) {
+                Image image = new Image(selectedFile.toURI().toString());
+                curPatient.setImagePath(image);
+                patientsImage.setImage(curPatient.getImagePath());
+
+            }
+        });
+
+        // Add menu item to the context menu
+        pfpContextMenu.getItems().add(changePfp);
+
+        // Add event handler to the Circle to show the ContextMenu on right-click
+        patientsImage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getButton() == MouseButton.SECONDARY) {
+                pfpContextMenu.show(patientsImage, event.getScreenX(), event.getScreenY());
+            } else {
+                pfpContextMenu.hide();
+            }
+        });
+
+
+    }
 }
 
 

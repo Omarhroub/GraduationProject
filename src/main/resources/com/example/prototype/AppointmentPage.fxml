@@ -113,7 +113,7 @@
                </font>
             </Label>
             <TextField fx:id="patientsJoinDate" editable="false" layoutX="90.0" layoutY="166.0" prefHeight="25.0" prefWidth="138.0" />
-            <ImageView fx:id="patientsImage" fitHeight="128.0" fitWidth="185.0" layoutX="532.0" layoutY="127.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="patientsImage" fitHeight="128.0" fitWidth="185.0" layoutX="532.0" layoutY="127.0" onMousePressed="#handleClickPfpPIC" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
       <Text layoutX="211.0" layoutY="443.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20;" text="Patient Details:" wrappingWidth="200.0" />

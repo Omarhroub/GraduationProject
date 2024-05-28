@@ -1,9 +1,12 @@
 package com.example.prototype;
 
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.image.Image;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Appointment {
     private String id;
@@ -18,6 +21,7 @@ public class Appointment {
     private String prescription;
     private String diagnosis;
     private Image xray;
+    DatabaseHandler db = new DatabaseHandler();
 
     public Appointment() {
 
@@ -35,6 +39,10 @@ public class Appointment {
     public String getId() {
         return id;
     }
+    public StringProperty getAppointmentTableId(){
+        StringProperty alo = new SimpleStringProperty(id);
+        return alo;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -43,6 +51,24 @@ public class Appointment {
     public String getShortDescription() {
         return shortDescription;
     }
+
+        public StringProperty getAppointmentTableShortDescription(){
+        StringProperty alo = new SimpleStringProperty(shortDescription);
+        return alo;
+    }
+
+    public StringProperty getAppointmentTablePatientsName(){
+        String name = db.getPatientName(patientId);
+        StringProperty alo = new SimpleStringProperty(name);
+        return alo;
+    }
+
+
+//    public StringProperty getAppointmentTablePatientsAge(){
+//        int age = db.getPatientAge(patientId);
+//        StringProperty alo = new SimpleStringProperty(Integer.toString(age));
+//        return alo;
+//    }
 
     public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
@@ -59,6 +85,12 @@ public class Appointment {
     public LocalDate getDate() {
         return date;
     }
+
+    public StringProperty getAppointmentTableDate(){
+        StringProperty alo = new SimpleStringProperty(date.toString());
+        return alo;
+    }
+
 
     public void setDate(LocalDate date) {
         this.date = date;
@@ -131,6 +163,19 @@ public class Appointment {
 
     public void setPatientId(String patientId) {
         this.patientId = patientId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Appointment that = (Appointment) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
 

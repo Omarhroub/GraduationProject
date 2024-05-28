@@ -3,6 +3,7 @@ package com.example.prototype;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,17 +12,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.io.File;
 import java.io.IOException;
-import java.net.Socket;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -52,16 +55,44 @@ public class MainPageController implements Initializable {
     private TextField searchTextField;
     @FXML
     private AnchorPane mainAnchorPane;
+    @FXML
+    private TableView<Appointment> appointmentsTableView;
+    @FXML
+    private TableColumn<Appointment, String> appointmentIdColumn;
+    @FXML
+    private TableColumn<Appointment, String> appointmentDateColumn;
+    @FXML
+    private TableColumn<Appointment, String> patientsNameColumn;
+    @FXML
+    private TableColumn<Appointment, String> ShortDescriptionColumn;
+    @FXML
+    private TableColumn<Appointment, Void> detailsColumn;
+    @FXML
+    private Button appointmentsButton;
+    @FXML
+    private Button patientsButton;
+    @FXML
+    private TextField searchTextField1;
 
-    public void refreshData() {
+    public void refreshPatientsData() {
+        patientsButton.setDisable(true);
+        appointmentsButton.setDisable(false);
         initiatePatients();
         initiateAppointments();
         patientsTableView.setItems(activeDoctor.getPatientsList());
-        setCellColumn();
+        setPatientsCellColumn();
     }
 
+    public void refreshAppointmentsData() {
+        patientsButton.setDisable(false);
+        appointmentsButton.setDisable(true);
+        appointmentsTableView.setItems(db.getAllAppointments(activeDoctor.getId()));
+        setAppointmentsCellColumn();
+    }
+
+
     public void handleInitialization() {
-        Image image = new Image("C:\\Users\\Omar\\IdeaProjects\\Prototype\\src\\main\\java\\com\\example\\prototype\\Images\\DoctorDashboard.png");
+        Image image = new Image("C:\\Users\\Omar\\IdeaProjects\\Prototype\\src\\main\\java\\com\\example\\prototype\\Images\\Testtt.png");
         BackgroundImage backgroundImage = new BackgroundImage(
                 image,
                 BackgroundRepeat.NO_REPEAT,
@@ -69,14 +100,13 @@ public class MainPageController implements Initializable {
                 BackgroundPosition.CENTER,
                 BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
-        mainAnchorPane.setBackground(background);
-
+        mainBorderPain.setBackground(background);
 
         doctorPicture.setFill(new ImagePattern(activeDoctor.getImagePath()));
         doctorName.setText(activeDoctor.getFullName());
         todaysDate.setText(LocalDate.now().toString());
 
-        refreshData();
+        fillPatientsInTable();
     }
 
     @Override
@@ -90,6 +120,26 @@ public class MainPageController implements Initializable {
             double width = newWidth.doubleValue();
             System.out.println("Width of mainAnchorPane: " + width);
         });
+    }
+
+    @FXML
+    public void fillPatientsInTable() {
+        patientsTableView.setVisible(true);
+        appointmentsTableView.setVisible(false);
+        searchTextField.setVisible(true);
+        searchTextField1.setVisible(false);
+
+        refreshPatientsData();
+    }
+
+    @FXML
+    public void fillAppointmentsInTable() {
+        patientsTableView.setVisible(false);
+        appointmentsTableView.setVisible(true);
+        searchTextField.setVisible(false);
+        searchTextField1.setVisible(true);
+
+        refreshAppointmentsData();
     }
 
     public void setActiveDoctor(Doctor activeDoctor) {
@@ -108,7 +158,7 @@ public class MainPageController implements Initializable {
         }
     }
 
-    private void setCellColumn() {
+    private void setPatientsCellColumn() {
 
         patientsName.setCellValueFactory(cellData -> cellData.getValue().getTableName());
         patientsId.setCellValueFactory(cellData -> cellData.getValue().getTableId());
@@ -240,6 +290,51 @@ public class MainPageController implements Initializable {
         });
     }
 
+    private void setAppointmentsCellColumn() {
+        appointmentIdColumn.setCellValueFactory(cellData -> cellData.getValue().getAppointmentTableId());
+        appointmentDateColumn.setCellValueFactory(cellData -> cellData.getValue().getAppointmentTableDate());
+        patientsNameColumn.setCellValueFactory(cellData -> cellData.getValue().getAppointmentTablePatientsName());
+        ShortDescriptionColumn.setCellValueFactory(cellData -> cellData.getValue().getAppointmentTableShortDescription());
+        detailsColumn.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<Appointment, Void> call(TableColumn<Appointment, Void> param) {
+                return new TableCell<>() {
+                    private final Button detailsButton = new Button("Details");
+
+                    {
+                        detailsButton.setOnAction(event -> {
+                            Appointment appointment = getTableView().getItems().get(getIndex());
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("AppointmentPage.fxml"));
+                            try {
+                                Patient p = db.getPatient(appointment.getPatientId());
+                                p.setAppointmentsList(db.getPatientAppointments(p.getId()));
+                                Parent root = loader.load();
+                                AppointmentPageController controller = loader.getController();
+                                controller.initData2(p, activeDoctor.getId(), appointment);
+                                Stage stage = new Stage();
+                                stage.setScene(new Scene(root));
+                                stage.setResizable(false);
+                                stage.show();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(detailsButton);
+                        }
+                    }
+                };
+            }
+        });
+    }
+
     @FXML
     public void handleNewPatientDialouge() {
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -319,9 +414,69 @@ public class MainPageController implements Initializable {
                 searchList.add(patient);
             }
         }
+        return searchList;
+    }
+
+    public void handleAppointmentSearchButton() {
+        appointmentsTableView.getItems().clear();
+        appointmentsTableView.getItems().addAll(returnAppointmentFilteredList(searchTextField1.getText()));
+    }
+
+    public ObservableList<Appointment> returnAppointmentFilteredList(String searchString) {
+        initiatePatients();
+        initiateAppointments();
+        ObservableList<Appointment> searchList = FXCollections.observableArrayList();
+        for (Appointment appointment : db.getAllAppointments(activeDoctor.getId())) {
+            if (appointment.getShortDescription().toLowerCase().contains(searchString.toLowerCase())) {
+                searchList.add(appointment);
+            }
+            String appointmentDate = appointment.getDate().toString();
+            if (appointmentDate.contains(searchString)){
+                if(!searchList.contains(appointment)){
+                    searchList.add(appointment);
+                }
+            }
+        }
 
         return searchList;
     }
+
+    @FXML
+    private void handleClickPfpPIC() {
+        ContextMenu pfpContextMenu = new ContextMenu();
+        MenuItem changePfp = new MenuItem("Change Profile Picture...");
+
+        // Add action to the menu item
+        changePfp.setOnAction(event -> {
+            // Your code to handle the action
+            System.out.println("Change Profile Picture clicked");
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open Image File");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.bmp"));
+            File selectedFile = fileChooser.showOpenDialog(mainBorderPain.getScene().getWindow());
+            if (selectedFile != null) {
+                Image image = new Image(selectedFile.toURI().toString());
+                activeDoctor.setImagePath(image);
+                doctorPicture.setFill(new ImagePattern(activeDoctor.getImagePath()));
+
+
+            }
+        });
+
+        // Add menu item to the context menu
+        pfpContextMenu.getItems().add(changePfp);
+
+        // Add event handler to the Circle to show the ContextMenu on right-click
+        doctorPicture.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if (event.getButton() == MouseButton.SECONDARY) {
+                pfpContextMenu.show(doctorPicture, event.getScreenX(), event.getScreenY());
+            } else {
+                pfpContextMenu.hide();
+            }
+        });
+    }
+
 
     private void showAlert(Alert.AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);
